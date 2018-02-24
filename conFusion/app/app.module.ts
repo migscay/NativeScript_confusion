@@ -3,8 +3,15 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
-import { MenuComponent } from './menu/menu.component';
+import { NativeScriptUISideDrawerModule } from "nativescript-telerik-ui/sidedrawer/angular";
 
+import { MenuComponent } from './menu/menu.component';
+import { DishdetailComponent } from './dishdetail/dishdetail.component';
+import { DrawerComponent } from "./shared/drawer/drawer.component";
+import { HomeComponent } from './home/home.component';
+
+import { PromotionService } from './services/promotion.service';
+import { LeaderService } from './services/leader.service';
 import { DishService } from './services/dish.service';
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
@@ -23,16 +30,22 @@ import { baseURL } from './shared/baseurl';
     imports: [
         NativeScriptModule,
         AppRoutingModule,
-        NativeScriptHttpModule
+        NativeScriptHttpModule,
+        NativeScriptUISideDrawerModule
     ],
     declarations: [
         AppComponent,
-        MenuComponent
+        MenuComponent,
+        DishdetailComponent,
+        DrawerComponent,
+        HomeComponent        
     ],
     providers: [
         {provide: 'BaseURL', useValue: baseURL},
         DishService,
-        ProcessHTTPMsgService
+        ProcessHTTPMsgService,
+        PromotionService,
+        LeaderService        
     ],
     schemas: [
         NO_ERRORS_SCHEMA
