@@ -15,6 +15,7 @@ import { AboutComponent } from './about/about.component';
 
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { FavoriteService } from './services/favorite.service';
 import { DishService } from './services/dish.service';
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
@@ -54,6 +55,7 @@ import { baseURL } from './shared/baseurl';
         DishService,
         ProcessHTTPMsgService,
         PromotionService,
+        FavoriteService,
         LeaderService        
     ],
     schemas: [
