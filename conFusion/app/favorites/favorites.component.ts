@@ -36,4 +36,42 @@ export class FavoritesComponent extends DrawerPage implements OnInit {
                 errmess => this.errMess = errmess);
     }
 
+    public onCellSwiping(args: ListViewEventData) {
+        var swipeLimits = args.data.swipeLimits;
+        var currentItemView = args.object;
+        var currentView;
+
+        if(args.data.x > 200) {
+
+        }
+        else if (args.data.x < -200) {
+
+        }
+    }
+
+    public onSwipeCellStarted(args: ListViewEventData) {
+        var swipeLimits = args.data.swipeLimits;
+        var swipeView = args['object'];
+
+        var leftItem = swipeView.getViewById('mark-view');
+        var rightItem = swipeView.getViewById('delete-view');
+        //swipeLimits.left = leftItem.getMeasuredWidth();
+        //swipeLimits.right = rightItem.getMeasuredWidth();
+        //swipeLimits.threshold = leftItem.getMeasuredWidth()/2;
+    }
+
+    public onSwipeCellFinished(args: ListViewEventData) {
+
+    }
+
+    public onLeftSwipeClick(args: ListViewEventData) {
+        console.log('Left swipe click');
+        this.listViewComponent.listView.notifySwipeToExecuteFinished();
+    }
+
+    public onRightSwipeClick(args: ListViewEventData) {
+        this.deleteFavorite(args.object.bindingContext.id);
+        this.listViewComponent.listView.notifySwipeToExecuteFinished();
+    }
+
 }
