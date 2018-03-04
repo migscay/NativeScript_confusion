@@ -14,35 +14,35 @@ export class FavoriteService {
 
     favorites: Array<number>;
 
-  constructor(private dishservice: DishService) { 
-      this.favorites = [];
-  }
-
-  isFavorite(id: number): boolean {
-      return this.favorites.some(el => el === id);
-  }
-
-  addFavorite(id: number): boolean {
-    if (!this.isFavorite(id)) {
-        this.favorites.push(id);
+    constructor(private dishservice: DishService) { 
+        this.favorites = [];
     }
-    return true;
-  }
 
-  getFavorites(): Observable<Dish[]> {
-      return this.dishservice.getDishes()
+    isFavorite(id: number): boolean {
+        return this.favorites.some(el => el === id);
+    }
+
+    addFavorite(id: number): boolean {
+        if (!this.isFavorite(id)) {
+            this.favorites.push(id);
+        }
+        return true;
+    }
+
+    getFavorites(): Observable<Dish[]> {
+        return this.dishservice.getDishes()
            .map(dishes => dishes.filter(dish => this.favorites.some(el => el === dish.id)));
     }
 
-    deleteFavorites(id: number): Observable<Dish[]> {
+    deleteFavorite(id: number): Observable<Dish[]> {
         // check first if it is in the Favorites
         let index = this.favorites.indexOf(id);
         if (index >= 0) {
-            this.favorites.splice(id,1);
+            this.favorites.splice(index,1);
             return this.getFavorites();
         }
         else {
             Observable.throw('Deleting non-existant favorite');
         }
-      }
+    }
 } 
