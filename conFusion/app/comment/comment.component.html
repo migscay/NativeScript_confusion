@@ -1,0 +1,17 @@
+<StackLayout class="modal-view-style">
+    <GridLayout class="m-5" rows="auto auto auto auto" columns="*, *">
+        <Label class="h3 m-15" row="0" col="0" text="Your Name" textWrap="true"></Label>
+        <TextField class="input input-border" id="author"
+            hint="Your Name" [text]=''
+            (textChange)="onAuthorChange($event)"
+            row="0" col="1"></TextField>
+        <Label class="h3 m-15" row="1" col="0" text="Rating" textWrap="true"></Label>
+        <Slider class="m-15" row="1" col="1" value="5" minValue="1" maxValue="5" (valueChange)="onRatingChange($event)"></Slider>
+        <Label class="h3 m-15" row="2" col="0" text="Your Comment" textWrap="true"></Label>
+        <TextField class="input input-border" id="textComment"
+            hint="Your Comment" [text]=''
+            row="2" col="1" Name="comment" (textChange)="onCommentChange($event)"></TextField>
+        <Button class="btn btn-primary btn-active" text="submit" row="3" col="0"
+        (tap)="submit()"></Button>
+    </GridLayout>
+</StackLayout>
