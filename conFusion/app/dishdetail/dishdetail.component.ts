@@ -12,7 +12,7 @@ import { action } from "ui/dialogs";
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 import { CommentComponent } from "../comment/comment.component";
 import { Validators, FormBuilder, FormGroup} from '@angular/forms';
-
+import { ObservableArray } from 'tns-core-modules/data/observable-array';
 
 @Component({
   selector: 'app-dishdetail',
@@ -29,6 +29,8 @@ export class DishdetailComponent implements OnInit {
   numcomments: number;
   favorite: boolean = false;
   addcomment: FormGroup;
+  newComment = <Comment>{};
+  comments: ObservableArray<Comment>;
 
   constructor(private dishservice: DishService,
     private favoriteservice: FavoriteService,
@@ -53,10 +55,11 @@ export class DishdetailComponent implements OnInit {
       .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
       .subscribe(dish => { this.dish = dish;
                            this.favorite = this.favoriteservice.isFavorite(this.dish.id);
-                           this.numcomments = this.dish.comments.length;
+                           this.comments = new ObservableArray(this.dish.comments);
+                           this.numcomments = this.comments.length;
 
                            let total=0;
-                           this.dish.comments.forEach(comment => total += comment.rating);
+                           this.comments.forEach(comment => total += comment.rating);
 
                            this.avgstars = (total/this.numcomments).toFixed(2);
       },
@@ -73,7 +76,7 @@ export class DishdetailComponent implements OnInit {
   }
 
   addComment(args) {
-    console.log('adding comment ' + this.dish.comments.toString);
+    console.log('Dishdetail adding comment ' + this.dish.comments.length);
 
     let options: ModalDialogOptions = {
       viewContainerRef: this.vcRef,
@@ -83,11 +86,13 @@ export class DishdetailComponent implements OnInit {
 
   this._modalService.showModal(CommentComponent, options)
       .then((result: any) => {
-        //this.addcomment.patchValue({rating: result});
-        //this.addcomment.patchValue({author: result});
-        //this.addcomment.patchValue({comment: result});
-        //console.log(this.addComment.toString);
-        console.log('DishDetail ' + this.dish.name);
+        this.newComment = <Comment>(result);
+        this.comments.push(this.newComment);
+        //update comment statistics
+        this.numcomments = this.comments.length;
+        let total=0;
+        this.comments.forEach(comment => total += comment.rating);
+        this.avgstars = (total/this.numcomments).toFixed(2);
       });
   }
   goBack(): void {

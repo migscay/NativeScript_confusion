@@ -16,16 +16,12 @@ export class CommentComponent implements OnInit {
     rating: number=5;
     author: string='';
     comment: string='';
-    comments: Comment[];
-    newComment: Comment;
+    newComment = <Comment>{};
     dish: Dish;
 
     constructor(private params: ModalDialogParams,
         private page: Page) {
             this.dish = params.context;
-            this.comments = this.dish.comments;
-            this.newComment = this.comments[0];
-            console.log('inside comment ' + this.dish.comments.toString);
     }
 
     ngOnInit() {
@@ -51,12 +47,13 @@ export class CommentComponent implements OnInit {
     }
 
     public submit() {
-        console.log('Submitted Comment');
+        console.log('Submitting Comment ' + this.dish.comments.length + this.dish.comments[0].author);
         this.newComment.author = this.author;
         this.newComment.rating = this.rating;
         this.newComment.comment = this.comment;
         this.newComment.date = Date();
-        this.dish.comments.push(this.newComment);
-        this.params.closeCallback(this.comments);
+        //this.dish.comments.push(this.newComment);
+        //this.params.closeCallback(this.comments);
+        this.params.closeCallback(this.newComment);
     }
 }
