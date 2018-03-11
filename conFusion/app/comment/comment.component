@@ -1,0 +1,40 @@
+import { Component, OnInit } from '@angular/core';
+import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
+import { DatePicker } from 'ui/date-picker';
+import { TimePicker } from 'ui/time-picker';
+import { ListPicker } from 'ui/list-picker';
+import { EventData } from "data/observable";
+import { Button } from "ui/button";
+import { Page } from 'ui/page';
+import { Validators, FormBuilder, FormGroup} from '@angular/forms';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './comment.component.html'
+})
+export class CommentComponent implements OnInit {
+
+    comment: FormGroup;
+    counter: number = 0;
+
+    constructor(private params: ModalDialogParams,
+        private page: Page,private formBuilder: FormBuilder) {
+
+          this.comment = this.formBuilder.group({
+              author: "",
+              rating: 1,
+              comment: ""
+          });
+
+    }
+
+    ngOnInit() {
+
+    }
+
+
+    onTap(args: EventData) {
+      this.params.closeCallback(this.comment.value);
+    }
+
+}
