@@ -72,7 +72,7 @@ export class ReservationComponent extends DrawerPage implements OnInit {
 
     onSubmit() {
         console.log(JSON.stringify(this.reservation.value));
-        this.confirmReservation = true;
+        //this.confirmReservation = true;
 
         this.reserveForm = <View>this.page.getViewById<View>("reserveForm");
         //this.confirmation = <View>this.page.getViewById<View>("confirmation");
@@ -116,7 +116,7 @@ export class ReservationComponent extends DrawerPage implements OnInit {
 
         this.reserveForm.className="confirmation"; 
         this.reserveForm.animate({scale: { x: 1, y: 1}, delay: 3000, duration: 3000});
-        this.confirmReservation = true;
+        //this.confirmReservation = true;
 
 
     }
