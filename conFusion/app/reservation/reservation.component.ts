@@ -41,7 +41,7 @@ export class ReservationComponent extends DrawerPage implements OnInit {
                 dateTime: ['', Validators.required]
             });        
 
-            this.reserveConfirmation = null;
+            this.reserveConfirmation = <Reservation>{};
         }
 
     ngOnInit() {
@@ -73,9 +73,11 @@ export class ReservationComponent extends DrawerPage implements OnInit {
     onSubmit() {
         console.log(JSON.stringify(this.reservation.value));
         //this.confirmReservation = true;
+        this.reserveConfirmation = <Reservation>this.reservation.value;
+        this.reserveConfirmation.guests
 
         this.reserveForm = <View>this.page.getViewById<View>("reserveForm");
-        //this.confirmation = <View>this.page.getViewById<View>("confirmation");
+        this.confirmation = <View>this.page.getViewById<View>("confirmation");
 
         let definitions = new Array<AnimationDefinition>();
 
@@ -114,9 +116,9 @@ export class ReservationComponent extends DrawerPage implements OnInit {
             console.log(e.message);
         });
 
-        this.reserveForm.className="confirmation"; 
-        this.reserveForm.animate({scale: { x: 1, y: 1}, delay: 3000, duration: 3000});
-        //this.confirmReservation = true;
+        this.confirmation.className="confirmation"; 
+        this.confirmation.animate({scale: { x: 1, y: 1}, delay: 3000, duration: 3000});
+        this.confirmReservation = true;
 
 
     }
