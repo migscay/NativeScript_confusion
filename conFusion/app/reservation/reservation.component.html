@@ -10,7 +10,7 @@
     <ScrollView orientation="vertical" tkMainContent class="page">
         <GridLayout class="m-5" rows="auto auto auto auto">
             <StackLayout row="0" class="p-10 no-border"> 
-                <GridLayout id="reserveForm" class="m-5" rows="auto auto auto auto" columns="*, *" [formGroup]="reservation" >
+                <GridLayout id="reserveForm" class="m-5" rows="auto auto auto auto" columns="135, *" [formGroup]="reservation" >
                     <Label class="h3 m-15" row="0" col="0" text="No. of Guests" textWrap="true"></Label>
                     <TextField class="input input-border" id="textGuests"
                         hint="Enter Number of Guests" [text]=''
@@ -31,7 +31,7 @@
                 </GridLayout>
             </StackLayout>
             <StackLayout row="0" id="confirmation" class="p-10 no-border" > 
-                <GridLayout id="reserveForm" class="m-5" rows="auto auto auto auto" columns="*, *" [visibility]="(confirmReservation) ? 'visible' : 'collapsed'">
+                <GridLayout id="reserveForm" class="m-5" rows="auto auto auto auto" columns="135, *" [visibility]="(confirmReservation) ? 'visible' : 'collapsed'">
                     <Label class="h3 m-15" row="0" col="0" text="No. of Guests" textWrap="true"></Label>
                     <Label class="m-15" row="0" col="1" [text]="reserveConfirmation.guests"></Label>
                     <Label class="h3 m-15" row="1" col="0" text="Smoking" textWrap="true"></Label>

@@ -12,6 +12,7 @@ import { SwipeGestureEventData, SwipeDirection } from "ui/gestures";
 import { Color } from 'color';
 import * as enums from "ui/enums";
 import { Reservation } from '../shared/reservation';
+import { CouchbaseService } from '../services/couchbase.service';
 
 @Component({
     selector: 'app-reservation',
@@ -24,12 +25,15 @@ export class ReservationComponent extends DrawerPage implements OnInit {
     reservation: FormGroup;
     confirmReservation: boolean = false;
     reserveConfirmation: Reservation;
+    reservations: Array<Reservation>;
+    docId: string = "reservations";
 
     reserveForm: View;
     confirmation: View;  
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
-        private formBuilder: FormBuilder, 
+        private formBuilder: FormBuilder,
+        private couchbaseService: CouchbaseService, 
         private page: Page,
         private _modalService: ModalDialogService, 
         private vcRef: ViewContainerRef) { 
@@ -119,7 +123,26 @@ export class ReservationComponent extends DrawerPage implements OnInit {
         this.confirmation.className="confirmation"; 
         this.confirmation.animate({scale: { x: 1, y: 1}, delay: 3000, duration: 3000});
         this.confirmReservation = true;
+        //this.couchbaseService.deleteDocument(this.docId);
 
+        let doc = this.couchbaseService.getDocument(this.docId);
+        if( doc == null) {
+          this.couchbaseService.createDocument({"reservations": []}, this.docId);
+          console.log("Reservations document created");
+          let doc = this.couchbaseService.getDocument(this.docId);
+          this.reservations = doc.reservations;
+        }
+        else {
+          this.reservations = doc.reservations;
+          console.log("Number of Reservations equal " + this.reservations.length);
+          //for (var i = 0; i < this.reservations.length; i++) {
+            console.log(JSON.stringify(this.reservations));
+          //}
+        }
+        console.log("Before add " + JSON.stringify(this.reservations));      
+        this.reservations.push(this.reserveConfirmation);
+        this.couchbaseService.updateDocument(this.docId, {"reservations": this.reservations});
+        console.log("After add " + JSON.stringify(this.reservations));      
 
     }
 
